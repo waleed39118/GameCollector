@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h1 class="h4 mb-4">Your Dashboard</h1>
+
+<div class="row mb-4">
+  <div class="col-md-3">
+    <div class="card text-bg-dark shadow-sm">
+      <div class="card-body text-center">
+        <h5 class="card-title">Total Games</h5>
+        <p class="display-6">{{ stats.total_games }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-bg-info shadow-sm">
+      <div class="card-body text-center">
+        <h5 class="card-title">Used Categories</h5>
+        <p class="display-6">{{ stats.used_categories }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-bg-secondary shadow-sm">
+      <div class="card-body text-center">
+        <h5 class="card-title">Top Platform</h5>
+        <p class="display-6">{{ stats.top_platform }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-bg-warning text-dark shadow-sm">
+      <div class="card-body text-center">
+        <h5 class="card-title">Avg. Rating</h5>
+        <p class="display-6">{{ stats.average_rating }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h2 class="h5 mb-3">Your Games</h2>
+
+{% if games %}
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for game in games %}
+      <div class="col">
+        <div class="card h-100 bg-secondary-subtle text-dark shadow-sm border-0">
+          {% if game.image %}
+            <img src="{{ game.image.url }}" class="card-img-top" alt="Game image">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">
+              <a href="{% url 'game_detail' game.pk %}" class="text-decoration-none text-dark fw-semibold">
+                {{ game.name }}
+              </a>
+            </h5>
+            <p class="card-text small">
+              <span class="badge text-bg-dark">{{ game.genre }}</span>
+              <span class="badge text-bg-info">{{ game.platform }}</span>
+              {% if game.category %}
+                <span class="badge text-bg-warning text-dark">{{ game.category.name }}</span>
+              {% endif %}
+            </p>
+            <p class="small m-0">Release: {{ game.release_date }} | Rating: ⭐ {{ game.rating }}/10</p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="alert alert-info">You haven't added any games yet.</div>
+{% endif %}
+{% endblock %}

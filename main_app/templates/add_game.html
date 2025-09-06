@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ADD GAME</title>
+</head>
+<body>
+    <h1>➕ ADD NEW GAME</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit"SAVE</button>
+    </form>
+    <a href="{% url 'game_list' %}">⬅️ Back To Menu</a>
+</body>
+</html>

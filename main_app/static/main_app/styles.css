@@ -1,0 +1,4 @@
+:root { --accent:#00ffff; }
+.navbar-brand { letter-spacing: .5px; }
+.card { border: 1px solid rgba(255,255,255,.06); }
+.badge { border-radius: 2px; }

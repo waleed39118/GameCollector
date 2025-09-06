@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}Games{% endblock %}
+{% block content %}
+<h1 class="h4 mb-3">Games</h1>
+
+<form method="get" class="row g-3 mb-4">
+  <div class="col-md-4">
+    <input type="search" name="q" class="form-control" placeholder="Search by name" value="{{ q }}">
+  </div>
+  <div class="col-md-3">
+    <select name="category" class="form-select">
+      <option value="">All categories</option>
+      {% for cat in categories %}
+        <option value="{{ cat.id }}" {% if cat.id|stringformat:"s" == selected_category %}selected{% endif %}>{{ cat.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-3">
+    <select name="platform" class="form-select">
+      <option value="">All platforms</option>
+      {% for plat in platforms %}
+        <option value="{{ plat }}" {% if plat == selected_platform %}selected{% endif %}>{{ plat }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-2">
+    <button type="submit" class="btn btn-outline-light w-100">Filter</button>
+  </div>
+</form>
+
+{% if games %}
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for game in games %}
+      <div class="col">
+        <div class="card h-100 bg-secondary-subtle text-dark shadow-sm border-0">
+          {% if game.image %}
+            <img src="{{ game.image.url }}" class="card-img-top" alt="Game image">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">
+              <a href="{% url 'game_detail' game.pk %}" class="text-decoration-none text-dark fw-semibold">
+                {{ game.name }}
+              </a>
+            </h5>
+            <p class="card-text small">
+              <span class="badge text-bg-dark">{{ game.genre }}</span>
+              <span class="badge text-bg-info">{{ game.platform }}</span>
+              {% if game.category %}
+                <span class="badge text-bg-warning text-dark">{{ game.category.name }}</span>
+              {% endif %}
+            </p>
+            <p class="small m-0">Release: {{ game.release_date }} | Rating: ⭐ {{ game.rating }}/10</p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="alert alert-info">No games found.</div>
+{% endif %}
+{% endblock %}

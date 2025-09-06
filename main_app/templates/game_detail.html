@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}{{ game.name }}{% endblock %}
+{% block content %}
+<div class="card bg-secondary-subtle text-dark shadow-sm">
+  <div class="card-body">
+    <h2 class="h4">{{ game.name }}</h2>
+    {% if game.image %}
+      <img src="{{ game.image.url }}" class="img-fluid mb-3 rounded" alt="Game image">
+    {% endif %}
+    <p class="mb-1"><strong>Genre:</strong> {{ game.genre }}</p>
+    <p class="mb-1"><strong>Platform:</strong> {{ game.platform }}</p>
+    <p class="mb-1"><strong>Release date:</strong> {{ game.release_date }}</p>
+    <p class="mb-1"><strong>Category:</strong> {{ game.category.name }}</p>
+    <p class="mb-3"><strong>Rating:</strong> ⭐ {{ game.rating }}/10</p>
+    <p><strong>Notes:</strong><br>{{ game.notes|default:"—" }}</p>
+    <div class="d-flex gap-2">
+      <a class="btn btn-outline-primary btn-sm" href="{% url 'game_update' game.pk %}">Edit</a>
+      <a class="btn btn-outline-danger btn-sm" href="{% url 'game_delete' game.pk %}">Delete</a>
+      <a class="btn btn-secondary btn-sm ms-auto" href="{% url 'game_list' %}">Back</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

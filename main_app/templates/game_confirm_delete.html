@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Delete {{ game.name }}{% endblock %}
+{% block content %}
+<div class="alert alert-warning">
+  Are you sure you want to delete "<strong>{{ game.name }}</strong>"? This action cannot be undone.
+</div>
+<form method="post" class="d-flex gap-2">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-danger">Yes, delete</button>
+  <a class="btn btn-secondary" href="{% url 'game_detail' game.pk %}">No, go back</a>
+</form>
+{% endblock %}
